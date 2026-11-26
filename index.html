@@ -2913,10 +2913,9 @@ html,body{margin:0;height:100%;background:#1b1b1b;overflow:hidden}
 <ul>
 <li class="fragment" data-fragment-index="1">Die Modellwahl aus Horizont, Metrik und Kostenasymmetrie ableiten </li>
 <li class="fragment" data-fragment-index="2">Modellfamilien nach Ausgangslage einordnen </li>
-<li class="fragment" data-fragment-index="3">Einen einfachen Mittelwert und Stacking als Ensemble abwägen </li>
-<li class="fragment" data-fragment-index="4">Drift in Netz- und Marktdaten erkennen und den Rhythmus für Retraining festlegen </li>
-<li class="fragment" data-fragment-index="5">Den Backtest im Betrieb weiterführen und Alarmschwellen pflegen </li>
-<li class="fragment" data-fragment-index="6">Genauigkeit gegen Komplexität und Wartbarkeit abwägen </li>
+<li class="fragment" data-fragment-index="3">Drift in Netz- und Marktdaten erkennen und den Rhythmus für Retraining festlegen </li>
+<li class="fragment" data-fragment-index="4">Den Backtest im Betrieb weiterführen und Alarmschwellen pflegen </li>
+<li class="fragment" data-fragment-index="5">Genauigkeit gegen Komplexität und Wartbarkeit abwägen </li>
 </ul>
 
 </section>
@@ -2976,40 +2975,6 @@ html,body{margin:0;height:100%;background:#1b1b1b;overflow:hidden}
 </table>
 <div class="quelle fragment" data-fragment-index="1">
 <p>Makridakis, Spiliotis, Assimakopoulos 2018, The M4 Competition: Results, findings, conclusion and way forward, International Journal of Forecasting 34(4), doi:10.1016/j.ijforecast.2018.06.001 · Zeng et al. 2023, Are Transformers Effective for Time Series Forecasting?, arXiv:2205.13504</p>
-</div>
-
-</section>
-<section id="f141" class="dense">
-<p class="eyebrow">Teil X · Modellauswahl und Betrieb</p>
-<h2>Ensembles: Mittelwert oder Stacking</h2>
-<div class="columns">
-<div class="column" style="width:48%">
-<p><b>Einfacher Mittelwert</b></p>
-<ul>
-<li class="fragment" data-fragment-index="1">gleiche Gewichte für zwei bis vier Verfahren mit verschiedenen Fehlern </li>
-<li class="fragment" data-fragment-index="2">keine zusätzlichen Parameter, kein eigenes Validierungsfenster </li>
-<li class="fragment" data-fragment-index="3">in M4 sind 12 der 17 genauesten Verfahren Kombinationen </li>
-</ul>
-</div>
-<div class="column" style="width:48%">
-<div class="fragment" data-fragment-index="4">
-<p><b>Stacking</b></p>
-</div>
-<ul>
-<li class="fragment" data-fragment-index="5">ein Metamodell lernt die Gewichte aus Out-of-Sample-Prognosen </li>
-<li class="fragment" data-fragment-index="6">braucht eigene Backtest-Folds, sonst entsteht Leakage </li>
-<li class="fragment" data-fragment-index="7">lohnt sich bei stabilem Regime und vielen Folds; die Gewichte driften mit </li>
-</ul>
-</div>
-</div>
-<div class="fragment" data-fragment-index="8">
-<div class="code"><p class="cl">cv = sf.cross_validation(df=train, h=<span style="color:#005cc5">24</span>, step_size=<span style="color:#005cc5">24</span>, n_windows=<span style="color:#005cc5">8</span>)</p><p class="cl">cv[<span style="color:#032f62">"mean_ens"</span>] = cv[ [<span style="color:#032f62">"SeasonalNaive"</span>, <span style="color:#032f62">"AutoETS"</span>, <span style="color:#032f62">"MSTL"</span>] ].mean(axis=<span style="color:#005cc5">1</span>)</p></div>
-</div>
-<div class="merk fragment" data-fragment-index="9">
-<p>Fangen Sie mit dem Mittelwert an. Geschätzte Gewichte schlagen ihn oft nicht, weil der Schätzfehler der Gewichte den Gewinn auffrisst.</p>
-</div>
-<div class="quelle fragment" data-fragment-index="10">
-<p>Makridakis et al. 2018, doi:10.1016/j.ijforecast.2018.06.001 · Wolpert 1992, Stacked generalization, Neural Networks 5(2), doi:10.1016/S0893-6080(05)80023-1 · Claeskens et al. 2016, The forecast combination puzzle: A simple theoretical explanation, International Journal of Forecasting 32(3), doi:10.1016/j.ijforecast.2015.12.005</p>
 </div>
 
 </section>
