@@ -3131,7 +3131,7 @@ html,body{margin:0;height:100%;background:#1b1b1b;overflow:hidden}
 <li class="fragment" data-fragment-index="1">Jede Position im Kontextfenster gewichtet alle anderen: Query fragt, Key bietet an, Value liefert </li>
 <li class="fragment" data-fragment-index="2">Keine Rekurrenz: parallel trainierbar, direkter Weg zwischen weit entfernten Zeitpunkten; der Aufwand wächst quadratisch mit der Kontextlänge </li>
 <li class="fragment" data-fragment-index="3">Für Zeitreihen: Abschnitte (Patches) statt Einzelwerte als Tokens; Grundlage der meisten Foundation Models, auch von Chronos </li>
-<li class="fragment" data-fragment-index="4">Gegenprobe: Ein einfaches lineares Modell schlägt auf Langfrist-Benchmarks mehrere Transformer-Modelle </li>
+<li class="fragment" data-fragment-index="4"><b>Aber:</b> Bei Prognosen bis 720 Schritte voraus (Strom, Verkehr, Wetter) war ein einfaches lineares Modell meist genauer als mehrere Transformer-Modelle (Zeng et al. 2023) </li>
 </ul>
 <div class="quelle fragment" data-fragment-index="5">
 <p>Vaswani et al. 2017, Attention Is All You Need, arXiv:1706.03762 · Nie et al. 2023, A Time Series is Worth 64 Words (PatchTST), arXiv:2211.14730 · Ansari et al. 2024, Chronos, arXiv:2403.07815 · Zeng et al. 2023, arXiv:2205.13504</p>
