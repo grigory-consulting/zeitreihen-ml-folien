@@ -2327,7 +2327,7 @@ html,body{margin:0;height:100%;background:#1b1b1b;overflow:hidden}
 </tr>
 </table>
 <ul>
-<li class="fragment" data-fragment-index="1">c_FP: Aufmerksamkeit in der Leitwarte, vorsorgliche Maßnahme ohne Anlass, Vertrauensverlust bei vielen Fehlalarmen </li>
+<li class="fragment" data-fragment-index="1">c_FP: Aufmerksamkeit im Betrieb, vorsorgliche Maßnahme ohne Anlass, Vertrauensverlust bei vielen Fehlalarmen </li>
 <li class="fragment" data-fragment-index="2">c_FN: Abweichung trifft den Betrieb unvorbereitet, Folgekosten, Meldepflichten </li>
 <li class="fragment" data-fragment-index="3">Gebraucht wird nur das Verhältnis c_FN zu c_FP, nicht der Betrag in Euro </li>
 <li class="fragment" data-fragment-index="4">Das Verhältnis kommt aus dem Betrieb, nicht aus den Daten </li>
@@ -2364,7 +2364,7 @@ html,body{margin:0;height:100%;background:#1b1b1b;overflow:hidden}
 <div class="fx" data-fx="gesamtkosten" style="width:760px;height:53px;margin:7px auto;flex:none"></div>
 <ul>
 <li class="fragment" data-fragment-index="1">Die Schwelle mit dem kleinsten K(t) wählen, auf dem Testzeitraum prüfen </li>
-<li class="fragment" data-fragment-index="2">Der Leitwarte nicht die Schwelle nennen, sondern wie viele Alarme sie je Woche auslöst: Mit „0,3“ kann dort niemand etwas anfangen, mit „10 Alarme je Woche“ schon </li>
+<li class="fragment" data-fragment-index="2">Im Betrieb nicht die Schwelle nennen, sondern wie viele Alarme sie je Woche auslöst: Mit „0,3“ kann dort niemand etwas anfangen, mit „10 Alarme je Woche“ schon </li>
 </ul>
 <iframe style="position:absolute;left:580px;top:259px;width:760px;height:53px;border:0" srcdoc="&lt;!DOCTYPE html&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta charset=&quot;utf-8&quot;/&gt;&lt;style&gt;html,body{margin:0;height:100%;background:transparent}body{display:flex;align-items:center;justify-content:center;color:#24364d;font-family:math,&#x27;STIX Two Math&#x27;,&#x27;Cambria Math&#x27;,serif;font-size:48px}math{margin:0}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;!-- LaTeX: K(t) = c_{FP}\cdot FP(t) + c_{FN}\cdot FN(t) --&gt;&lt;math display=&quot;block&quot; xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mrow&gt;&lt;mi&gt;K&lt;/mi&gt;&lt;mo stretchy=&quot;false&quot;&gt;(&lt;/mo&gt;&lt;mi&gt;t&lt;/mi&gt;&lt;mo stretchy=&quot;false&quot;&gt;)&lt;/mo&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;msub&gt;&lt;mi&gt;c&lt;/mi&gt;&lt;mrow&gt;&lt;mi&gt;F&lt;/mi&gt;&lt;mi&gt;P&lt;/mi&gt;&lt;/mrow&gt;&lt;/msub&gt;&lt;mo&gt;⋅&lt;/mo&gt;&lt;mi&gt;F&lt;/mi&gt;&lt;mi&gt;P&lt;/mi&gt;&lt;mo stretchy=&quot;false&quot;&gt;(&lt;/mo&gt;&lt;mi&gt;t&lt;/mi&gt;&lt;mo stretchy=&quot;false&quot;&gt;)&lt;/mo&gt;&lt;mo&gt;+&lt;/mo&gt;&lt;msub&gt;&lt;mi&gt;c&lt;/mi&gt;&lt;mrow&gt;&lt;mi&gt;F&lt;/mi&gt;&lt;mi&gt;N&lt;/mi&gt;&lt;/mrow&gt;&lt;/msub&gt;&lt;mo&gt;⋅&lt;/mo&gt;&lt;mi&gt;F&lt;/mi&gt;&lt;mi&gt;N&lt;/mi&gt;&lt;mo stretchy=&quot;false&quot;&gt;(&lt;/mo&gt;&lt;mi&gt;t&lt;/mi&gt;&lt;mo stretchy=&quot;false&quot;&gt;)&lt;/mo&gt;&lt;/mrow&gt;&lt;/math&gt;&lt;/body&gt;&lt;/html&gt;"></iframe>
@@ -2393,7 +2393,7 @@ html,body{margin:0;height:100%;background:#1b1b1b;overflow:hidden}
 <li class="fragment" data-fragment-index="1">Prüfen mit dem Zuverlässigkeitsdiagramm: vorhergesagte Wahrscheinlichkeit gegen beobachteten Anteil </li>
 <li class="fragment" data-fragment-index="2">Klassengewichte und Resampling verzerren die Wahrscheinlichkeiten nach oben </li>
 <li class="fragment" data-fragment-index="3">Reparieren mit Platt-Skalierung (sigmoid) oder isotonischer Regression auf einem eigenen Zeitraum </li>
-<li class="fragment" data-fragment-index="4">Nötig, wenn die Zahl selbst zählt: Schwelle per Formel, Risiko an die Leitwarte, Summe erwarteter Ereignisse </li>
+<li class="fragment" data-fragment-index="4">Nötig, wenn die Zahl selbst zählt: Schwelle per Formel, Risiko an den Betrieb, Summe erwarteter Ereignisse </li>
 </ul>
 <div class="fragment" data-fragment-index="5">
 <div class="code"><p class="cl"><span style="color:#d73a49">from</span> <span style="color:#24292e">sklearn.calibration</span> <span style="color:#d73a49">import</span> calibration_curve</p><p class="cl"> </p><p class="cl">frac_pos, mean_pred = calibration_curve(y_valid, p_valid, n_bins=<span style="color:#005cc5">10</span>, strategy=<span style="color:#032f62">"quantile"</span>)</p></div>
