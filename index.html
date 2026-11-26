@@ -1769,12 +1769,15 @@ html,body{margin:0;height:100%;background:#1b1b1b;overflow:hidden}
 <p class="eyebrow">Teil VI · Anomalieerkennung</p>
 <h2>Change Points mit CUSUM</h2>
 <div class="fx" data-fx="cusum" style="width:1498px;height:60px;margin:7px auto;flex:none"></div>
+<div style="display:flex;align-items:center;gap:40px;margin-top:20px">
+<img alt="cusum beispiel" class="fig" src="figs/cusum_beispiel.png" style="width:880px;height:583px;object-fit:contain;flex:none"/>
 <ul>
 <li class="fragment" data-fragment-index="1">CUSUM (Cumulative Sum) addiert kleine Abweichungen vom Sollwert μ₀ auf </li>
 <li class="fragment" data-fragment-index="2">k ist die Toleranz: Abweichungen darunter werden vergessen </li>
 <li class="fragment" data-fragment-index="3">Alarm, sobald S⁺ oder S⁻ die Entscheidungsgrenze h überschreitet </li>
 <li class="fragment" data-fragment-index="4">Findet anhaltende Verschiebungen, bei denen kein Einzelwert eine Schwelle reißt </li>
 </ul>
+</div>
 <div class="quelle fragment" data-fragment-index="5">
 <p>Page (1954): Continuous Inspection Schemes. Biometrika 41(1/2), 100–115. DOI 10.1093/biomet/41.1-2.100</p>
 </div>
