@@ -2619,7 +2619,8 @@ html,body{margin:0;height:100%;background:#1b1b1b;overflow:hidden}
 <ul>
 <li class="fragment" data-fragment-index="1"><b>Eingabe</b> je Schritt: Abweichung, Änderung zum Schritt davor, Stunde des Tages; 240 Sekunden auf 120 Schritte gemittelt </li>
 <li class="fragment" data-fragment-index="2"><span class="ic" style="color:#2459a6">Conv1d</span> bildet lokale Muster, das GRU liest ihre Folge, der <b>letzte Hidden State</b> fasst das Fenster zusammen </li>
-<li class="fragment" data-fragment-index="3">Die Klassengewichte im Loss wirken wie <span class="ic" style="color:#2459a6">class_weight="balanced"</span> bei LightGBM. <b>Messlatte:</b> LightGBM auf Kennzahlen je Fenster im selben zeitlichen Split </li>
+<li class="fragment" data-fragment-index="3">Die Klassengewichte im Loss wirken wie <span class="ic" style="color:#2459a6">class_weight="balanced"</span> bei LightGBM </li>
+<li class="fragment" data-fragment-index="4"><b>Vergleich:</b> LightGBM auf Kennzahlen je Fenster, trainiert und getestet auf denselben Zeiträumen. Das GRU lohnt sich nur, wenn es besser ist </li>
 </ul>
 
 </section>
