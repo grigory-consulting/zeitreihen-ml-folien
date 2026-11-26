@@ -1,33 +1,38 @@
-# Legt die vier Verfahren für den Backtest an.
-sf = StatsForecast(
-    models=[SeasonalNaive(season_length=168), RandomWalkWithDrift(), AutoETS(season_length=24),
-            MSTL(season_length=[24, 168])],
-    freq="h",
-    n_jobs=1,
-)
-# Legt die Spaltennamen der Verfahren fest.
-MODELS = ["SeasonalNaive", "RWD", "AutoETS", "MSTL"]
+# Lab-Ordner finden (Jupyter, VS Code, PyCharm), damit `common` importierbar ist
+import os
+# Importiert sys für den Suchpfad der Module.
+import sys
+# Importiert warnings zum Filtern von Warnungen.
+import warnings
+# Importiert Path für Dateipfade.
+from pathlib import Path
 
+# Sucht den Lab-Ordner im Arbeitsordner und in den übergeordneten Ordnern.
+for base in (Path.cwd(), Path.cwd() / "labs", *Path.cwd().parents):
+    # Prüft, ob der Ordner das Paket common enthält.
+    if (base / "common" / "__init__.py").exists():
+        # Wechselt in den gefundenen Lab-Ordner.
+        os.chdir(base)
+        # Nimmt den Lab-Ordner in den Suchpfad für Importe auf.
+        sys.path.insert(0, str(base))
+        # Beendet die Suche nach dem ersten Treffer.
+        break
+warnings.filterwarnings("ignore", category=DeprecationWarning)  # numpy 2.5 meldet interne pandas-Aufrufe
 
+# Importiert LightGBM für das Gradient Boosting.
+import lightgbm as lgb
+# Importiert matplotlib für die Grafiken.
+import matplotlib.pyplot as plt
+# Importiert numpy für Arrays.
+import numpy as np
+# Importiert pandas für Tabellen und Zeitreihen.
+import pandas as pd
 
-# Startet die Zeitmessung.
-start = time.perf_counter()
-# Führt den Rolling-Origin-Backtest mit 14 Ursprüngen aus und ergänzt den Schritt.
-cv = add_step(sf.cross_validation(df=df, h=24, step_size=24, n_windows=14, input_size=TRAIN_HOURS))
-# Gibt Laufzeit und Bereich der Ursprünge aus.
-print(f"Backtest: {time.perf_counter() - start:.1f} s, Ursprünge {cv['cutoff'].min()} bis {cv['cutoff'].max()} UTC")
-# Legt MAE, Standardfehler, MASE und Anteil vor der Baseline je Verfahren nebeneinander.
-score(cv, y, MODELS, TRAIN_HOURS)
+# Importiert Seed, Datenordner, Ladefunktion und MAE aus dem Kurspaket.
+from common import SEED, find_data_dir, load, mae
+# Importiert die Merkmals- und Backtest-Bausteine für Lab 2.
+from common.lab2_features import (LOCAL_TZ, backtest, calendar_features, compare, day_ahead_folds,
+                                  fold_mae, fourier_features, holiday_features, make_features)
 
-
-
-# Berechnet den mittleren absoluten Fehler je Schritt nach dem Ursprung.
-by_step = cv[MODELS ].sub(cv["y"], axis=0).abs().groupby(cv["step"]).mean()
-# Zeichnet den Fehler je Schritt ohne Drift und AutoETS.
-ax = by_step.drop(columns=["RWD", "AutoETS"]).plot(marker=".")
-# Beschriftet die Achsen.
-ax.set(xlabel="Schritt nach dem Ursprung (Stunden)", ylabel="MAE (MWh)", ylim=(0, None))
-# Zeigt die Abbildung.
-plt.show()
-# Gibt Minimum und Maximum des Baseline-Fehlers je Schritt aus.
-print(f"Baseline je Schritt: {by_step['SeasonalNaive'].min():.0f} bis {by_step['SeasonalNaive'].max():.0f} MWh")
+# Gibt Arbeitsordner und LightGBM-Version aus.
+print("Arbeitsordner:", Path.cwd().name, "| LightGBM", lgb.__version__)
