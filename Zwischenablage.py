@@ -26,3 +26,17 @@ res["seasonal_naive"] = y.shift(168).reindex(res.index)
 print("Testzeitraum:", res.index.min(), "bis", res.index.max(), "|", len(res), "Stunden")
 # Vergleicht beide Prognosen in einer Tabelle.
 compare(res, y, ["seasonal_naive", "lightgbm"])
+
+
+
+res["published"] = data["load_forecast_mwh"].reindex(res.index)
+# Vergleicht Seasonal Naive, veröffentlichte Prognose und LightGBM.
+table = compare(res, y, ["seasonal_naive", "published", "lightgbm"])
+# Zählt die Folds, in denen LightGBM den kleineren MAE hat.
+wins = int((fold_mae(res, "lightgbm") < fold_mae(res, "published")).sum())
+# Berechnet den relativen Unterschied im MAE in Prozent.
+gap = 100 * (table.loc["lightgbm", "MAE"] / table.loc["published", "MAE"] - 1)
+# Gibt Unterschied und Zahl der gewonnenen Folds aus.
+print(f"LightGBM gegen veröffentlicht: {gap:+.1f} % MAE, besser in {wins} von 6 Folds")
+# Zeigt die Vergleichstabelle.
+table
