@@ -7,3 +7,14 @@ sf = StatsForecast(
 )
 # Legt die Spaltennamen der Verfahren fest.
 MODELS = ["SeasonalNaive", "RWD", "AutoETS", "MSTL"]
+
+
+
+# Startet die Zeitmessung.
+start = time.perf_counter()
+# Führt den Rolling-Origin-Backtest mit 14 Ursprüngen aus und ergänzt den Schritt.
+cv = add_step(sf.cross_validation(df=df, h=24, step_size=24, n_windows=14, input_size=TRAIN_HOURS))
+# Gibt Laufzeit und Bereich der Ursprünge aus.
+print(f"Backtest: {time.perf_counter() - start:.1f} s, Ursprünge {cv['cutoff'].min()} bis {cv['cutoff'].max()} UTC")
+# Legt MAE, Standardfehler, MASE und Anteil vor der Baseline je Verfahren nebeneinander.
+score(cv, y, MODELS, TRAIN_HOURS)
