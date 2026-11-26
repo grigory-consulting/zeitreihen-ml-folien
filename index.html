@@ -2106,19 +2106,6 @@ html,body{margin:0;height:100%;background:#1b1b1b;overflow:hidden}
 </div>
 
 </section>
-<section id="f098" class="dense">
-<p class="eyebrow">Teil VII · Klassifikation auf Zeitreihen</p>
-<h2>Fenstermerkmale</h2>
-<p>Ein Fenster über die Vergangenheit wird zu einer Zeile mit Kennzahlen. Danach lernt ein Boosting-Modell wie in Teil V.</p>
-<div class="code"><p class="cl"><span style="color:#d73a49">import</span> <span style="color:#24292e">pandas</span> <span style="color:#d73a49">as</span> <span style="color:#24292e">pd</span></p><p class="cl"> </p><p class="cl">h = <span style="color:#005cc5">24</span>                                    <span class="cm" style="color:#6a737d"># Horizont in Stunden</span></p><p class="cl">threshold = <span style="color:#005cc5">0.1</span>                           <span class="cm" style="color:#6a737d"># 100 mHz, f_ext steht in Hz</span></p><p class="cl">past = df[<span style="color:#032f62">"f_ext"</span>].abs().shift(h)         <span class="cm" style="color:#6a737d"># erst ab Entscheidungszeit bekannt</span></p><p class="cl"> </p><p class="cl">X = pd.DataFrame({</p><p class="cl">    <span style="color:#032f62">"fext_mean_24h"</span>: past.rolling(<span style="color:#005cc5">24</span>).mean(),</p><p class="cl">    <span style="color:#032f62">"fext_max_24h"</span>: past.rolling(<span style="color:#005cc5">24</span>).max(),</p><p class="cl">    <span style="color:#032f62">"n_events_168h"</span>: (past &gt; threshold).rolling(<span style="color:#005cc5">168</span>).sum(),</p><p class="cl">    <span style="color:#032f62">"hour"</span>: df.index.tz_convert(<span style="color:#032f62">"Europe/Berlin"</span>).hour,</p><p class="cl">    <span style="color:#032f62">"weekday"</span>: df.index.tz_convert(<span style="color:#032f62">"Europe/Berlin"</span>).day_of_week,</p><p class="cl">}, index=df.index)</p><p class="cl">y = (df[<span style="color:#032f62">"f_ext"</span>].abs() &gt; threshold).astype(<span style="color:#e36209">int</span>)</p></div>
-<ul>
-<li class="fragment" data-fragment-index="1">Typische Fenstermerkmale: Mittel, Streuung, Extremwert, Steigung, Zahl der Überschreitungen, Rampe als Differenz aufeinanderfolgender Stunden </li>
-</ul>
-<div class="quelle fragment" data-fragment-index="2">
-<p>Christ, Braun, Neuffer, Kempa-Liehr (2018): Time Series FeatuRe Extraction on basis of Scalable Hypothesis tests (tsfresh). Neurocomputing 307, DOI 10.1016/j.neucom.2018.03.067</p>
-</div>
-
-</section>
 <section id="f099">
 <p class="eyebrow">Teil VII · Klassifikation auf Zeitreihen</p>
 <h2>Gelernte Repräsentation: 1D-Faltung</h2>
@@ -3313,7 +3300,7 @@ html,body{margin:0;height:100%;background:#1b1b1b;overflow:hidden}
 <li class="fragment" data-fragment-index="3">Killick, Fearnhead, Eckley (2012): Optimal Detection of Changepoints With a Linear Computational Cost, JASA 107(500), doi:10.1080/01621459.2012.737745 </li>
 <li class="fragment" data-fragment-index="4">Liu, Ting, Zhou (2012): Isolation-Based Anomaly Detection, ACM TKDD 6(1), doi:10.1145/2133360.2133363 </li>
 <li class="fragment" data-fragment-index="5">Tatbul et al. (2018): Precision and Recall for Time Series, NeurIPS, arXiv:1803.03639. Sørbø, Ruocco (2024): Navigating the metric maze, Data Mining and Knowledge Discovery 38, doi:10.1007/s10618-023-00988-8 </li>
-<li class="fragment" data-fragment-index="6">Christ et al. (2018): tsfresh, Neurocomputing 307, doi:10.1016/j.neucom.2018.03.067. Dempster, Petitjean, Webb (2020): ROCKET, Data Mining and Knowledge Discovery 34, doi:10.1007/s10618-020-00701-z </li>
+<li class="fragment" data-fragment-index="6">Dempster, Petitjean, Webb (2020): ROCKET, Data Mining and Knowledge Discovery 34, doi:10.1007/s10618-020-00701-z </li>
 <li class="fragment" data-fragment-index="7">Saito, Rehmsmeier (2015): The Precision-Recall Plot Is More Informative than the ROC Plot, PLOS ONE 10(3), doi:10.1371/journal.pone.0118432 </li>
 <li class="fragment" data-fragment-index="8">Elkan (2001): The Foundations of Cost-Sensitive Learning, Proceedings IJCAI 2001 </li>
 <li class="fragment" data-fragment-index="9">Niculescu-Mizil, Caruana (2005): Predicting good probabilities with supervised learning, ICML, doi:10.1145/1102351.1102430 </li>
