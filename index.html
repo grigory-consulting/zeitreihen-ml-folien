@@ -2070,13 +2070,15 @@ html,body{margin:0;height:100%;background:#1b1b1b;overflow:hidden}
 <section id="f095">
 <p class="eyebrow">Teil VII · Klassifikation auf Zeitreihen</p>
 <h2>Label definieren</h2>
-<p>Label je Stunde: 1, wenn der Betrag von f_ext über 100 mHz liegt, sonst 0. Jede der folgenden Entscheidungen ändert die Zahl der positiven Stunden:</p>
+<p>Das Modell braucht für jede Stunde eine Antwort: Ereignis ja oder nein. Diese Antwort ist das Label.</p>
+<div class="merk">
+<p><b>Label = 1</b>, wenn die Frequenz in der Stunde mehr als 100 mHz von 50 Hz abweicht (Betrag von f_ext über 100 mHz), sonst <b>0</b></p>
+</div>
 <ul>
-<li class="fragment" data-fragment-index="1">1.039 von 40.147 Stunden sind positiv (2,59 %), je Jahr 124, 203, 240, 287 und 185 </li>
-<li class="fragment" data-fragment-index="2">Betrag oder Vorzeichen: Über- und Unterfrequenz in eine Klasse (wie hier über den Betrag) oder getrennt? </li>
-<li class="fragment" data-fragment-index="3">Lücken: Stunden ohne Wert fallen heraus, sie werden nicht zu 0 </li>
-<li class="fragment" data-fragment-index="4">Extremwerte: neun Stunden über 250 mHz, sieben davon 2015, höchster Wert 558 mHz; ob Messfehler oder echtes Ereignis, ist offen </li>
-<li class="fragment" data-fragment-index="5">Die Regel steht im Code an genau einer Stelle, mit der Grenze als Parameter </li>
+<li class="fragment" data-fragment-index="1">Ergebnis: 1.039 von 40.147 Stunden sind Ereignisse, das sind 2,6 % </li>
+<li class="fragment" data-fragment-index="2">Zu hohe und zu niedrige Frequenz zählen gemeinsam </li>
+<li class="fragment" data-fragment-index="3">Stunden ohne Messwert bleiben leer, sie werden nicht zu 0 </li>
+<li class="fragment" data-fragment-index="4">Eine andere Grenze ergibt andere Ereignisse: Die Regel steht deshalb an einer Stelle im Code </li>
 </ul>
 
 </section>
