@@ -1992,7 +1992,7 @@ html,body{margin:0;height:100%;background:#1b1b1b;overflow:hidden}
 <p>Die Punkte folgen den Entscheidungen in einem Projekt: erst das Ereignis, dann das Modell, dann die Bewertung, dann die Schwelle.</p>
 <ul>
 <li class="fragment" data-fragment-index="1">Aus einer Zielgröße ein Ereignis machen: Label, Horizont, Vorwarnzeit </li>
-<li class="fragment" data-fragment-index="2">Merkmale wählen: Fenstermerkmale oder gelernte Repräsentation </li>
+<li class="fragment" data-fragment-index="2">Merkmale wählen: Fenstermerkmale wie in Teil VI </li>
 <li class="fragment" data-fragment-index="3">Mit seltenen Klassen umgehen: Klassengewichte setzen statt raten </li>
 <li class="fragment" data-fragment-index="4">Ehrlich bewerten: Precision-Recall-Kurve, Average Precision, Prävalenz-Baseline </li>
 <li class="fragment" data-fragment-index="5">Die Schwelle aus den Kosten von Fehlalarm und verpasstem Ereignis ableiten </li>
@@ -2105,81 +2105,6 @@ html,body{margin:0;height:100%;background:#1b1b1b;overflow:hidden}
 </ul>
 <div class="warn fragment" data-fragment-index="5">
 <p>Ein Merkmal darf nur ins Modell, wenn es zur Entscheidungszeit vorliegt (Teil IV).</p>
-</div>
-
-</section>
-<section id="f099">
-<p class="eyebrow">Teil VII · Klassifikation auf Zeitreihen</p>
-<h2>Gelernte Repräsentation: 1D-Faltung</h2>
-<p>Statt von Hand gewählter Kennzahlen lernt ein Faltungsnetz (Convolutional Neural Network, CNN) kleine Filter, die über das Fenster gleiten.</p>
-<div class="fx" data-fx="faltung_1d" style="width:478px;height:158px;margin:7px auto;flex:none"></div>
-<ul>
-<li class="fragment" data-fragment-index="1">Ein Filter mit K Gewichten erkennt ein lokales Muster, etwa eine steile Rampe oder einen Sprung </li>
-<li class="fragment" data-fragment-index="2">Viele Filter ergeben viele Merkmalskarten (Feature Maps); Pooling fasst sie zu einem Vektor zusammen </li>
-<li class="fragment" data-fragment-index="3">Eine letzte Schicht macht daraus eine Wahrscheinlichkeit für das Ereignis </li>
-</ul>
-<div class="fragment" data-fragment-index="4">
-<img alt="faltung 1d ablauf" class="fig" src="figs/faltung_1d_ablauf.png" style="width:1498px;height:140px;object-fit:contain"/>
-</div>
-<iframe style="position:absolute;left:721px;top:312px;width:478px;height:158px;border:0" srcdoc="&lt;!DOCTYPE html&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta charset=&quot;utf-8&quot;/&gt;&lt;style&gt;html,body{margin:0;height:100%;background:transparent}body{display:flex;align-items:center;justify-content:center;color:#24364d;font-family:math,&#x27;STIX Two Math&#x27;,&#x27;Cambria Math&#x27;,serif;font-size:51px}math{margin:0}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;!-- LaTeX: z_t = \sum_{k=0}^{K-1} w_k \, x_{t+k} + b --&gt;&lt;math display=&quot;block&quot; xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mrow&gt;&lt;msub&gt;&lt;mi&gt;z&lt;/mi&gt;&lt;mi&gt;t&lt;/mi&gt;&lt;/msub&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;munderover&gt;&lt;mo&gt;∑&lt;/mo&gt;&lt;mrow&gt;&lt;mi&gt;k&lt;/mi&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mn&gt;0&lt;/mn&gt;&lt;/mrow&gt;&lt;mrow&gt;&lt;mi&gt;K&lt;/mi&gt;&lt;mo&gt;−&lt;/mo&gt;&lt;mn&gt;1&lt;/mn&gt;&lt;/mrow&gt;&lt;/munderover&gt;&lt;msub&gt;&lt;mi&gt;w&lt;/mi&gt;&lt;mi&gt;k&lt;/mi&gt;&lt;/msub&gt;&lt;mtext&gt; &lt;/mtext&gt;&lt;msub&gt;&lt;mi&gt;x&lt;/mi&gt;&lt;mrow&gt;&lt;mi&gt;t&lt;/mi&gt;&lt;mo&gt;+&lt;/mo&gt;&lt;mi&gt;k&lt;/mi&gt;&lt;/mrow&gt;&lt;/msub&gt;&lt;mo&gt;+&lt;/mo&gt;&lt;mi&gt;b&lt;/mi&gt;&lt;/mrow&gt;&lt;/math&gt;&lt;/body&gt;&lt;/html&gt;"></iframe>
-
-</section>
-<section id="f099b" class="dense">
-<p class="eyebrow">Teil VII · Klassifikation auf Zeitreihen</p>
-<h2>1D-Faltung an einem Zahlenbeispiel</h2>
-<p>Der Filter w = (−1, 0, 1) mit b = 0 gleitet über sieben Werte x, die bei t = 3 zu steigen beginnen.</p>
-<table>
-<tr>
-<th>t</th>
-<th>0</th>
-<th>1</th>
-<th>2</th>
-<th>3</th>
-<th>4</th>
-<th>5</th>
-<th>6</th>
-</tr>
-<tr>
-<td>Eingang xₜ</td>
-<td>2</td>
-<td>2</td>
-<td>2</td>
-<td>5</td>
-<td>8</td>
-<td>8</td>
-<td>8</td>
-</tr>
-<tr>
-<td>Merkmalskarte zₜ</td>
-<td>0</td>
-<td>3</td>
-<td>6</td>
-<td>3</td>
-<td>0</td>
-<td></td>
-<td></td>
-</tr>
-</table>
-<ul>
-<li class="fragment" data-fragment-index="1">Jeder Wert zₜ verrechnet drei Eingangswerte ab Position t: z₂ = −1 · x₂ + 0 · x₃ + 1 · x₄ = −2 + 0 + 8 = 6 </li>
-<li class="fragment" data-fragment-index="2">Auf dem flachen Stück ist z = 0, mitten in der Rampe am größten: Der Filter misst die Steigung über zwei Schritte </li>
-<li class="fragment" data-fragment-index="3">Sieben Werte, Filterlänge drei: Die Merkmalskarte hat 7 − 3 + 1 = 5 Werte. Mit <span class="ic" style="color:#2459a6">padding=1</span> bliebe sie bei sieben </li>
-<li class="fragment" data-fragment-index="4">Max-Pooling nimmt den größten Wert, hier 6: Im Fenster gab es eine Rampe, egal an welcher Stelle </li>
-</ul>
-
-</section>
-<section id="f100" class="dense">
-<p class="eyebrow">Teil VII · Klassifikation auf Zeitreihen</p>
-<h2>1D-Faltung in PyTorch</h2>
-<div class="code"><p class="cl"><span style="color:#d73a49">import</span> <span style="color:#24292e">torch</span></p><p class="cl"><span style="color:#d73a49">from</span> <span style="color:#24292e">torch</span> <span style="color:#d73a49">import</span> nn</p><p class="cl"> </p><p class="cl">torch.manual_seed(<span style="color:#005cc5">1</span>)</p><p class="cl">model = nn.Sequential(</p><p class="cl">    nn.Conv1d(in_channels=<span style="color:#005cc5">4</span>, out_channels=<span style="color:#005cc5">16</span>, kernel_size=<span style="color:#005cc5">5</span>, padding=<span style="color:#005cc5">2</span>), nn.ReLU(),</p><p class="cl">    nn.Conv1d(<span style="color:#005cc5">16</span>, <span style="color:#005cc5">16</span>, kernel_size=<span style="color:#005cc5">5</span>, padding=<span style="color:#005cc5">2</span>), nn.ReLU(),</p><p class="cl">    nn.AdaptiveMaxPool1d(<span style="color:#005cc5">1</span>), nn.Flatten(),</p><p class="cl">    nn.Linear(<span style="color:#005cc5">16</span>, <span style="color:#005cc5">1</span>),                     <span class="cm" style="color:#6a737d"># ein Logit je Fenster</span></p><p class="cl">)</p><p class="cl">loss_fn = nn.BCEWithLogitsLoss(pos_weight=torch.tensor([<span style="color:#005cc5">37.6</span>]))</p><p class="cl"> </p><p class="cl">x = torch.randn(<span style="color:#005cc5">32</span>, <span style="color:#005cc5">4</span>, <span style="color:#005cc5">48</span>)                <span class="cm" style="color:#6a737d"># Batch, Kanäle, Zeitschritte</span></p><p class="cl">loss = loss_fn(model(x).squeeze(<span style="color:#005cc5">1</span>), torch.zeros(<span style="color:#005cc5">32</span>))</p></div>
-<ul>
-<li class="fragment" data-fragment-index="1">Lohnt bei langen Rohsignalen (Sekundenwerte) und vielen Ereignissen, wenn gute Merkmale schwer von Hand zu finden sind </li>
-<li class="fragment" data-fragment-index="2">Bei Tabellen mit Stundenwerten und gut tausend positiven Stunden zuerst Fenstermerkmale mit Boosting </li>
-<li class="fragment" data-fragment-index="3">Zufällige Faltungsfilter mit linearem Modell (ROCKET) sind eine schnelle Zwischenstufe </li>
-</ul>
-<div class="quelle fragment" data-fragment-index="4">
-<p>Wang, Yan, Oates (2017), IJCNN, DOI 10.1109/IJCNN.2017.7966039. Ismail Fawaz et al. (2019), Data Min. Knowl. Discov. 33, DOI 10.1007/s10618-019-00619-1. Dempster, Petitjean, Webb (2020), ROCKET, Data Min. Knowl. Discov. 34, DOI 10.1007/s10618-020-00701-z</p>
 </div>
 
 </section>
@@ -2456,7 +2381,7 @@ html,body{margin:0;height:100%;background:#1b1b1b;overflow:hidden}
 <ul>
 <li class="fragment" data-fragment-index="1">Eine fachliche Regel legt das Ereignis fest: Grenze, Betrag oder Vorzeichen, Lücken, Labelfenster </li>
 <li class="fragment" data-fragment-index="2">Horizont und Vorwarnzeit kommen aus dem Betrieb; jedes Merkmal muss zur Entscheidungszeit vorliegen </li>
-<li class="fragment" data-fragment-index="3">Fenstermerkmale mit Boosting zuerst, gelernte Faltungsfilter bei langen Rohsignalen und vielen Ereignissen </li>
+<li class="fragment" data-fragment-index="3">Fenstermerkmale mit Boosting zuerst; gelernte Filter (1D-Faltung) folgen in Teil VIII </li>
 <li class="fragment" data-fragment-index="4">Klassengewichte im Training, <span class="ic" style="color:#2459a6">predict_proba</span> statt <span class="ic" style="color:#2459a6">predict</span> </li>
 <li class="fragment" data-fragment-index="5">PR-Kurve und AP, immer neben Prävalenz und Tageszeit-Baseline </li>
 <li class="fragment" data-fragment-index="6">Die Schwelle aus dem Kostenverhältnis, gewählt auf der Validierung, berichtet als Alarme je Woche </li>
@@ -2479,8 +2404,9 @@ html,body{margin:0;height:100%;background:#1b1b1b;overflow:hidden}
 <li class="fragment" data-fragment-index="2">Training: Loss, Gradientenabstieg, Batches, Epochen </li>
 <li class="fragment" data-fragment-index="3">Netze mit Gedächtnis: rekurrente Netze (RNN) und ihre Varianten LSTM und GRU </li>
 <li class="fragment" data-fragment-index="4">Ein Trainingsgerüst in PyTorch Lightning </li>
-<li class="fragment" data-fragment-index="5">Autoencoder als Detektor für Anomalien </li>
-<li class="fragment" data-fragment-index="6">Wann sich Deep Learning lohnt und wann nicht </li>
+<li class="fragment" data-fragment-index="5">Faltungsnetze (CNN): gelernte Filter für lokale Muster </li>
+<li class="fragment" data-fragment-index="6">Autoencoder als Detektor für Anomalien </li>
+<li class="fragment" data-fragment-index="7">Wann sich Deep Learning lohnt und wann nicht </li>
 </ul>
 
 </section>
@@ -2671,6 +2597,81 @@ html,body{margin:0;height:100%;background:#1b1b1b;overflow:hidden}
 </ul>
 <div class="quelle fragment" data-fragment-index="4">
 <p>Kruse, Schäfer, Witthaut (2021): Exploring deterministic frequency deviations with explainable AI, arXiv:2106.09538</p>
+</div>
+
+</section>
+<section id="f099">
+<p class="eyebrow">Teil VIII · Deep Learning</p>
+<h2>Gelernte Repräsentation: 1D-Faltung</h2>
+<p>Statt von Hand gewählter Kennzahlen lernt ein Faltungsnetz (Convolutional Neural Network, CNN) kleine Filter, die über das Fenster gleiten.</p>
+<div class="fx" data-fx="faltung_1d" style="width:478px;height:158px;margin:7px auto;flex:none"></div>
+<ul>
+<li class="fragment" data-fragment-index="1">Ein Filter mit K Gewichten erkennt ein lokales Muster, etwa eine steile Rampe oder einen Sprung </li>
+<li class="fragment" data-fragment-index="2">Viele Filter ergeben viele Merkmalskarten (Feature Maps); Pooling fasst sie zu einem Vektor zusammen </li>
+<li class="fragment" data-fragment-index="3">Eine letzte Schicht macht daraus eine Wahrscheinlichkeit für das Ereignis </li>
+</ul>
+<div class="fragment" data-fragment-index="4">
+<img alt="faltung 1d ablauf" class="fig" src="figs/faltung_1d_ablauf.png" style="width:1498px;height:140px;object-fit:contain"/>
+</div>
+<iframe style="position:absolute;left:721px;top:312px;width:478px;height:158px;border:0" srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta charset=&quot;utf-8&quot;/&gt;&lt;style&gt;html,body{margin:0;height:100%;background:transparent}body{display:flex;align-items:center;justify-content:center;color:#24364d;font-family:math,&#x27;STIX Two Math&#x27;,&#x27;Cambria Math&#x27;,serif;font-size:51px}math{margin:0}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;!-- LaTeX: z_t = \sum_{k=0}^{K-1} w_k \, x_{t+k} + b --&gt;&lt;math display=&quot;block&quot; xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mrow&gt;&lt;msub&gt;&lt;mi&gt;z&lt;/mi&gt;&lt;mi&gt;t&lt;/mi&gt;&lt;/msub&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;munderover&gt;&lt;mo&gt;∑&lt;/mo&gt;&lt;mrow&gt;&lt;mi&gt;k&lt;/mi&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mn&gt;0&lt;/mn&gt;&lt;/mrow&gt;&lt;mrow&gt;&lt;mi&gt;K&lt;/mi&gt;&lt;mo&gt;−&lt;/mo&gt;&lt;mn&gt;1&lt;/mn&gt;&lt;/mrow&gt;&lt;/munderover&gt;&lt;msub&gt;&lt;mi&gt;w&lt;/mi&gt;&lt;mi&gt;k&lt;/mi&gt;&lt;/msub&gt;&lt;mtext&gt; &lt;/mtext&gt;&lt;msub&gt;&lt;mi&gt;x&lt;/mi&gt;&lt;mrow&gt;&lt;mi&gt;t&lt;/mi&gt;&lt;mo&gt;+&lt;/mo&gt;&lt;mi&gt;k&lt;/mi&gt;&lt;/mrow&gt;&lt;/msub&gt;&lt;mo&gt;+&lt;/mo&gt;&lt;mi&gt;b&lt;/mi&gt;&lt;/mrow&gt;&lt;/math&gt;&lt;/body&gt;&lt;/html&gt;"></iframe>
+
+</section>
+<section id="f099b" class="dense">
+<p class="eyebrow">Teil VIII · Deep Learning</p>
+<h2>1D-Faltung an einem Zahlenbeispiel</h2>
+<p>Der Filter w = (−1, 0, 1) mit b = 0 gleitet über sieben Werte x, die bei t = 3 zu steigen beginnen.</p>
+<table>
+<tr>
+<th>t</th>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+</tr>
+<tr>
+<td>Eingang xₜ</td>
+<td>2</td>
+<td>2</td>
+<td>2</td>
+<td>5</td>
+<td>8</td>
+<td>8</td>
+<td>8</td>
+</tr>
+<tr>
+<td>Merkmalskarte zₜ</td>
+<td>0</td>
+<td>3</td>
+<td>6</td>
+<td>3</td>
+<td>0</td>
+<td></td>
+<td></td>
+</tr>
+</table>
+<ul>
+<li class="fragment" data-fragment-index="1">Jeder Wert zₜ verrechnet drei Eingangswerte ab Position t: z₂ = −1 · x₂ + 0 · x₃ + 1 · x₄ = −2 + 0 + 8 = 6 </li>
+<li class="fragment" data-fragment-index="2">Auf dem flachen Stück ist z = 0, mitten in der Rampe am größten: Der Filter misst die Steigung über zwei Schritte </li>
+<li class="fragment" data-fragment-index="3">Sieben Werte, Filterlänge drei: Die Merkmalskarte hat 7 − 3 + 1 = 5 Werte. Mit <span class="ic" style="color:#2459a6">padding=1</span> bliebe sie bei sieben </li>
+<li class="fragment" data-fragment-index="4">Max-Pooling nimmt den größten Wert, hier 6: Im Fenster gab es eine Rampe, egal an welcher Stelle </li>
+</ul>
+
+</section>
+<section id="f100" class="dense">
+<p class="eyebrow">Teil VIII · Deep Learning</p>
+<h2>1D-Faltung in PyTorch</h2>
+<div class="code"><p class="cl"><span style="color:#d73a49">import</span> <span style="color:#24292e">torch</span></p><p class="cl"><span style="color:#d73a49">from</span> <span style="color:#24292e">torch</span> <span style="color:#d73a49">import</span> nn</p><p class="cl"> </p><p class="cl">torch.manual_seed(<span style="color:#005cc5">1</span>)</p><p class="cl">model = nn.Sequential(</p><p class="cl">    nn.Conv1d(in_channels=<span style="color:#005cc5">4</span>, out_channels=<span style="color:#005cc5">16</span>, kernel_size=<span style="color:#005cc5">5</span>, padding=<span style="color:#005cc5">2</span>), nn.ReLU(),</p><p class="cl">    nn.Conv1d(<span style="color:#005cc5">16</span>, <span style="color:#005cc5">16</span>, kernel_size=<span style="color:#005cc5">5</span>, padding=<span style="color:#005cc5">2</span>), nn.ReLU(),</p><p class="cl">    nn.AdaptiveMaxPool1d(<span style="color:#005cc5">1</span>), nn.Flatten(),</p><p class="cl">    nn.Linear(<span style="color:#005cc5">16</span>, <span style="color:#005cc5">1</span>),                     <span class="cm" style="color:#6a737d"># ein Logit je Fenster</span></p><p class="cl">)</p><p class="cl">loss_fn = nn.BCEWithLogitsLoss(pos_weight=torch.tensor([<span style="color:#005cc5">37.6</span>]))</p><p class="cl"> </p><p class="cl">x = torch.randn(<span style="color:#005cc5">32</span>, <span style="color:#005cc5">4</span>, <span style="color:#005cc5">48</span>)                <span class="cm" style="color:#6a737d"># Batch, Kanäle, Zeitschritte</span></p><p class="cl">loss = loss_fn(model(x).squeeze(<span style="color:#005cc5">1</span>), torch.zeros(<span style="color:#005cc5">32</span>))</p></div>
+<ul>
+<li class="fragment" data-fragment-index="1">Lohnt bei langen Rohsignalen (Sekundenwerte) und vielen Ereignissen, wenn gute Merkmale schwer von Hand zu finden sind </li>
+<li class="fragment" data-fragment-index="2">Bei Tabellen mit Stundenwerten und gut tausend positiven Stunden zuerst Fenstermerkmale mit Boosting </li>
+<li class="fragment" data-fragment-index="3">Zufällige Faltungsfilter mit linearem Modell (ROCKET) sind eine schnelle Zwischenstufe </li>
+</ul>
+<div class="quelle fragment" data-fragment-index="4">
+<p>Wang, Yan, Oates (2017), IJCNN, DOI 10.1109/IJCNN.2017.7966039. Ismail Fawaz et al. (2019), Data Min. Knowl. Discov. 33, DOI 10.1007/s10618-019-00619-1. Dempster, Petitjean, Webb (2020), ROCKET, Data Min. Knowl. Discov. 34, DOI 10.1007/s10618-020-00701-z</p>
 </div>
 
 </section>
