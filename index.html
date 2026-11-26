@@ -2558,6 +2558,7 @@ html,body{margin:0;height:100%;background:#1b1b1b;overflow:hidden}
 <p class="eyebrow">Teil VIII · Deep Learning</p>
 <h2>1D-Faltung an einem Zahlenbeispiel</h2>
 <p>Der Filter w = (−1, 0, 1) mit b = 0 gleitet über sieben Werte x. Die Reihe steht erst bei 2 und steigt dann von t = 2 bis t = 4 auf 8: Dieser Anstieg ist die Rampe.</p>
+<div style="display:flex;align-items:center;gap:36px">
 <table>
 <tr>
 <th>t</th>
@@ -2590,6 +2591,8 @@ html,body{margin:0;height:100%;background:#1b1b1b;overflow:hidden}
 <td></td>
 </tr>
 </table>
+<img alt="faltung rampe" class="fig" src="figs/faltung_rampe.png" style="width:1000px;height:371px;object-fit:contain"/>
+</div>
 <ul>
 <li class="fragment" data-fragment-index="1">Jeder Wert zₜ verrechnet drei Eingangswerte ab Position t: z₂ = −1 · x₂ + 0 · x₃ + 1 · x₄ = −2 + 0 + 8 = 6 </li>
 <li class="fragment" data-fragment-index="2">Auf dem flachen Stück ist z = 0, mitten in der Rampe am größten: Der Filter misst die Steigung über zwei Schritte </li>
