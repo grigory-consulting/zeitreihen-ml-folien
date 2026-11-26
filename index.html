@@ -248,7 +248,7 @@ html,body{margin:0;height:100%;background:#1b1b1b;overflow:hidden}
 <li class="fragment" data-fragment-index="2"><b>Prognosen ehrlich bewerten:</b> Baseline, Rolling-Origin-Backtest und passende Fehlermaße </li>
 <li class="fragment" data-fragment-index="3"><b>Merkmale ohne Leakage bauen</b> und ein Boosting-Modell für einen festen Horizont aufsetzen </li>
 <li class="fragment" data-fragment-index="4"><b>Anomalien erkennen und Alarme bewerten:</b> Score, Schwelle, Ereignis, Fehlalarmbudget </li>
-<li class="fragment" data-fragment-index="5"><b>Seltene Ereignisse klassifizieren:</b> Labels definieren, Klassen gewichten, die Schwelle aus den Kosten ableiten </li>
+<li class="fragment" data-fragment-index="5"><b>Seltene Ereignisse klassifizieren:</b> Labels definieren und Klassen gewichten </li>
 <li class="fragment" data-fragment-index="6"><b>Modellfamilien einordnen</b> (klassisch, Boosting, Deep Learning, Foundation Models) und für den Betrieb auswählen </li>
 </ol>
 
@@ -1983,20 +1983,19 @@ html,body{margin:0;height:100%;background:#1b1b1b;overflow:hidden}
 <p class="kicker">Teil VII</p>
 <h1>Klassifikation auf Zeitreihen</h1>
 <p class="numeral">VII</p>
-<p>Sie erkennen seltene Ereignisse vorab: Label festlegen, Klassen gewichten, Modelle ehrlich bewerten und die Alarmschwelle aus den Kosten ableiten.</p>
+<p>Sie erkennen seltene Ereignisse vorab: Label festlegen, Klassen gewichten und Modelle ehrlich bewerten.</p>
 
 </section>
 <section id="f091">
 <p class="eyebrow">Teil VII · Klassifikation auf Zeitreihen</p>
 <h2>Was Sie in diesem Teil lernen</h2>
-<p>Die Punkte folgen den Entscheidungen in einem Projekt: erst das Ereignis, dann das Modell, dann die Bewertung, dann die Schwelle.</p>
+<p>Die Punkte folgen den Entscheidungen in einem Projekt: erst das Ereignis, dann das Modell, dann die Bewertung.</p>
 <ul>
 <li class="fragment" data-fragment-index="1">Aus einer Zielgröße ein Ereignis machen: Label, Horizont, Vorwarnzeit </li>
 <li class="fragment" data-fragment-index="2">Merkmale wählen: Fenstermerkmale wie in Teil VI </li>
 <li class="fragment" data-fragment-index="3">Mit seltenen Klassen umgehen: Klassengewichte setzen statt raten </li>
 <li class="fragment" data-fragment-index="4">Ehrlich bewerten: Precision-Recall-Kurve, Average Precision, Prävalenz-Baseline </li>
-<li class="fragment" data-fragment-index="5">Die Schwelle aus den Kosten von Fehlalarm und verpasstem Ereignis ableiten </li>
-<li class="fragment" data-fragment-index="6">Zeitlich validieren, Wahrscheinlichkeiten prüfen, gegen Anomalieerkennung abgrenzen </li>
+<li class="fragment" data-fragment-index="5">Zeitlich validieren, Wahrscheinlichkeiten prüfen, gegen Anomalieerkennung abgrenzen </li>
 </ul>
 
 </section>
@@ -2261,42 +2260,6 @@ html,body{margin:0;height:100%;background:#1b1b1b;overflow:hidden}
 </ul>
 
 </section>
-<section id="f109">
-<p class="eyebrow">Teil VII · Klassifikation auf Zeitreihen</p>
-<h2>Schwelle aus den Kosten</h2>
-<p>Ein Alarm lohnt sich, wenn die erwarteten Kosten des Schweigens größer sind als die des Alarms:</p>
-<div class="fx" data-fx="kosten_erwartet" style="width:548px;height:53px;margin:7px auto;flex:none"></div>
-<div class="fragment" data-fragment-index="1">
-<p>Aufgelöst nach p ergibt das die Schwelle:</p>
-<div class="fx" data-fx="schwelle_kosten" style="width:369px;height:114px;margin:7px auto;flex:none"></div>
-</div>
-<ul>
-<li class="fragment" data-fragment-index="2">Beispiel: Wiegt ein verpasstes Ereignis zehnmal so schwer wie ein Fehlalarm, ist p* = 1/11 ≈ 0,09 </li>
-<li class="fragment" data-fragment-index="3">Die Formel gilt nur, wenn p stimmt: Von allen Stunden mit 9 % Risiko hat auch etwa jede elfte ein Ereignis </li>
-<li class="fragment" data-fragment-index="4">Klassengewichte im Training schieben p nach oben. Dann passt die Formel nicht, und die Schwelle wird auf den Validierungsdaten gesucht (nächste Folie) </li>
-</ul>
-<div class="quelle fragment" data-fragment-index="5">
-<p>Elkan (2001): The Foundations of Cost-Sensitive Learning. Proceedings IJCAI 2001, S. 973 bis 978</p>
-</div>
-<iframe style="position:absolute;left:686px;top:312px;width:548px;height:53px;border:0" srcdoc="&lt;!DOCTYPE html&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta charset=&quot;utf-8&quot;/&gt;&lt;style&gt;html,body{margin:0;height:100%;background:transparent}body{display:flex;align-items:center;justify-content:center;color:#24364d;font-family:math,&#x27;STIX Two Math&#x27;,&#x27;Cambria Math&#x27;,serif;font-size:48px}math{margin:0}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;!-- LaTeX: p \cdot c_{FN} \; &amp;gt; \; (1-p) \cdot c_{FP} --&gt;&lt;math display=&quot;block&quot; xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mrow&gt;&lt;mi&gt;p&lt;/mi&gt;&lt;mo&gt;⋅&lt;/mo&gt;&lt;msub&gt;&lt;mi&gt;c&lt;/mi&gt;&lt;mrow&gt;&lt;mi&gt;F&lt;/mi&gt;&lt;mi&gt;N&lt;/mi&gt;&lt;/mrow&gt;&lt;/msub&gt;&lt;mtext&gt;  &lt;/mtext&gt;&lt;mo&gt;&amp;gt;&lt;/mo&gt;&lt;mtext&gt;  &lt;/mtext&gt;&lt;mo stretchy=&quot;false&quot;&gt;(&lt;/mo&gt;&lt;mn&gt;1&lt;/mn&gt;&lt;mo&gt;−&lt;/mo&gt;&lt;mi&gt;p&lt;/mi&gt;&lt;mo stretchy=&quot;false&quot;&gt;)&lt;/mo&gt;&lt;mo&gt;⋅&lt;/mo&gt;&lt;msub&gt;&lt;mi&gt;c&lt;/mi&gt;&lt;mrow&gt;&lt;mi&gt;F&lt;/mi&gt;&lt;mi&gt;P&lt;/mi&gt;&lt;/mrow&gt;&lt;/msub&gt;&lt;/mrow&gt;&lt;/math&gt;&lt;/body&gt;&lt;/html&gt;"></iframe>
-<iframe style="position:absolute;left:776px;top:446px;width:369px;height:114px;border:0" srcdoc="&lt;!DOCTYPE html&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta charset=&quot;utf-8&quot;/&gt;&lt;style&gt;html,body{margin:0;height:100%;background:transparent}body{display:flex;align-items:center;justify-content:center;color:#24364d;font-family:math,&#x27;STIX Two Math&#x27;,&#x27;Cambria Math&#x27;,serif;font-size:55px}math{margin:0}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;!-- LaTeX: p^{*} = \frac{c_{FP}}{c_{FP} + c_{FN}} --&gt;&lt;math display=&quot;block&quot; xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mrow&gt;&lt;msup&gt;&lt;mi&gt;p&lt;/mi&gt;&lt;mo lspace=&quot;0em&quot; rspace=&quot;0em&quot;&gt;∗&lt;/mo&gt;&lt;/msup&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;mfrac&gt;&lt;msub&gt;&lt;mi&gt;c&lt;/mi&gt;&lt;mrow&gt;&lt;mi&gt;F&lt;/mi&gt;&lt;mi&gt;P&lt;/mi&gt;&lt;/mrow&gt;&lt;/msub&gt;&lt;mrow&gt;&lt;msub&gt;&lt;mi&gt;c&lt;/mi&gt;&lt;mrow&gt;&lt;mi&gt;F&lt;/mi&gt;&lt;mi&gt;P&lt;/mi&gt;&lt;/mrow&gt;&lt;/msub&gt;&lt;mo&gt;+&lt;/mo&gt;&lt;msub&gt;&lt;mi&gt;c&lt;/mi&gt;&lt;mrow&gt;&lt;mi&gt;F&lt;/mi&gt;&lt;mi&gt;N&lt;/mi&gt;&lt;/mrow&gt;&lt;/msub&gt;&lt;/mrow&gt;&lt;/mfrac&gt;&lt;/mrow&gt;&lt;/math&gt;&lt;/body&gt;&lt;/html&gt;"></iframe>
-
-</section>
-<section id="f110">
-<p class="eyebrow">Teil VII · Klassifikation auf Zeitreihen</p>
-<h2>Schwelle auf den Validierungsdaten wählen</h2>
-<p>Für jede Kandidatenschwelle t berechnen, was sie auf der Validierung kostet:</p>
-<div class="fx" data-fx="gesamtkosten" style="width:760px;height:53px;margin:7px auto;flex:none"></div>
-<ul>
-<li class="fragment" data-fragment-index="1">Die Schwelle mit dem kleinsten K(t) wählen, auf dem Testzeitraum prüfen </li>
-<li class="fragment" data-fragment-index="2">Im Betrieb nicht die Schwelle nennen, sondern wie viele Alarme sie je Woche auslöst: Mit „0,3“ kann dort niemand etwas anfangen, mit „10 Alarme je Woche“ schon </li>
-</ul>
-<iframe style="position:absolute;left:580px;top:259px;width:760px;height:53px;border:0" srcdoc="&lt;!DOCTYPE html&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta charset=&quot;utf-8&quot;/&gt;&lt;style&gt;html,body{margin:0;height:100%;background:transparent}body{display:flex;align-items:center;justify-content:center;color:#24364d;font-family:math,&#x27;STIX Two Math&#x27;,&#x27;Cambria Math&#x27;,serif;font-size:48px}math{margin:0}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;!-- LaTeX: K(t) = c_{FP}\cdot FP(t) + c_{FN}\cdot FN(t) --&gt;&lt;math display=&quot;block&quot; xmlns=&quot;http://www.w3.org/1998/Math/MathML&quot;&gt;&lt;mrow&gt;&lt;mi&gt;K&lt;/mi&gt;&lt;mo stretchy=&quot;false&quot;&gt;(&lt;/mo&gt;&lt;mi&gt;t&lt;/mi&gt;&lt;mo stretchy=&quot;false&quot;&gt;)&lt;/mo&gt;&lt;mo&gt;=&lt;/mo&gt;&lt;msub&gt;&lt;mi&gt;c&lt;/mi&gt;&lt;mrow&gt;&lt;mi&gt;F&lt;/mi&gt;&lt;mi&gt;P&lt;/mi&gt;&lt;/mrow&gt;&lt;/msub&gt;&lt;mo&gt;⋅&lt;/mo&gt;&lt;mi&gt;F&lt;/mi&gt;&lt;mi&gt;P&lt;/mi&gt;&lt;mo stretchy=&quot;false&quot;&gt;(&lt;/mo&gt;&lt;mi&gt;t&lt;/mi&gt;&lt;mo stretchy=&quot;false&quot;&gt;)&lt;/mo&gt;&lt;mo&gt;+&lt;/mo&gt;&lt;msub&gt;&lt;mi&gt;c&lt;/mi&gt;&lt;mrow&gt;&lt;mi&gt;F&lt;/mi&gt;&lt;mi&gt;N&lt;/mi&gt;&lt;/mrow&gt;&lt;/msub&gt;&lt;mo&gt;⋅&lt;/mo&gt;&lt;mi&gt;F&lt;/mi&gt;&lt;mi&gt;N&lt;/mi&gt;&lt;mo stretchy=&quot;false&quot;&gt;(&lt;/mo&gt;&lt;mi&gt;t&lt;/mi&gt;&lt;mo stretchy=&quot;false&quot;&gt;)&lt;/mo&gt;&lt;/mrow&gt;&lt;/math&gt;&lt;/body&gt;&lt;/html&gt;"></iframe>
-
-</section>
 <section id="f111" class="dense">
 <p class="eyebrow">Teil VII · Klassifikation auf Zeitreihen</p>
 <h2>Zeitliche Validierung</h2>
@@ -2320,7 +2283,7 @@ html,body{margin:0;height:100%;background:#1b1b1b;overflow:hidden}
 <li class="fragment" data-fragment-index="1">Prüfen mit dem Zuverlässigkeitsdiagramm: vorhergesagte Wahrscheinlichkeit gegen beobachteten Anteil </li>
 <li class="fragment" data-fragment-index="2">Klassengewichte und Resampling verzerren die Wahrscheinlichkeiten nach oben </li>
 <li class="fragment" data-fragment-index="3">Reparieren mit Platt-Skalierung (sigmoid) oder isotonischer Regression auf einem eigenen Zeitraum </li>
-<li class="fragment" data-fragment-index="4">Nötig, wenn die Zahl selbst zählt: Schwelle per Formel, Risiko an den Betrieb, Summe erwarteter Ereignisse </li>
+<li class="fragment" data-fragment-index="4">Nötig, wenn die Zahl selbst zählt: Risiko an den Betrieb, Summe erwarteter Ereignisse </li>
 </ul>
 <div class="fragment" data-fragment-index="5">
 <div class="code"><p class="cl"><span style="color:#d73a49">from</span> <span style="color:#24292e">sklearn.calibration</span> <span style="color:#d73a49">import</span> calibration_curve</p><p class="cl"> </p><p class="cl">frac_pos, mean_pred = calibration_curve(y_valid, p_valid, n_bins=<span style="color:#005cc5">10</span>, strategy=<span style="color:#032f62">"quantile"</span>)</p></div>
@@ -2384,7 +2347,6 @@ html,body{margin:0;height:100%;background:#1b1b1b;overflow:hidden}
 <li class="fragment" data-fragment-index="3">Fenstermerkmale mit Boosting zuerst; gelernte Filter (1D-Faltung) folgen in Teil VIII </li>
 <li class="fragment" data-fragment-index="4">Klassengewichte im Training, <span class="ic" style="color:#2459a6">predict_proba</span> statt <span class="ic" style="color:#2459a6">predict</span> </li>
 <li class="fragment" data-fragment-index="5">PR-Kurve und AP, immer neben Prävalenz und Tageszeit-Baseline </li>
-<li class="fragment" data-fragment-index="6">Die Schwelle aus dem Kostenverhältnis, gewählt auf der Validierung, berichtet als Alarme je Woche </li>
 </ul>
 
 </section>
