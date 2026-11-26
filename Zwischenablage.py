@@ -1,30 +1,21 @@
-# Importiert die Standardmodule für Pfade, Zeitmessung und Warnungen.
-import os
-import sys
-import time
-import warnings
-from pathlib import Path
+# Legt drei übereinanderliegende Achsen an.
+fig, axes = plt.subplots(3, 1, figsize=(11, 6.5), sharex=True)
+# Zeichnet Beobachtung, Trend und Rest je in eine Achse.
+for ax, (label, part) in zip(axes, [("Beobachtung", year), ("Trend", res.trend), ("Rest", res.resid)]):
+    # Zeichnet die Komponente als Linie.
+    ax.plot(part.index, part.values, lw=0.5)
+    # Beschriftet die Achse mit dem Namen der Komponente.
+    ax.set_ylabel(label)
+# Ordnet die Achsen ohne Überlappung an.
+plt.tight_layout()
+# Zeigt die Abbildung.
+plt.show()
 
-# Sucht den Lab-Ordner, in dem das Paket common liegt.
-LABS = next(p for p in (Path.cwd(), Path.cwd() / "labs", Path.cwd().parent) if (p / "common").is_dir())
-# Wechselt in den Lab-Ordner.
-os.chdir(LABS)
-# Macht das Paket common importierbar.
-sys.path.insert(0, str(LABS))
-# Blendet DeprecationWarnings aus.
-warnings.filterwarnings("ignore", category=DeprecationWarning)
-
-# Importiert Feiertage, Plot, pandas und die Prognoseverfahren.
-import holidays
-import matplotlib.pyplot as plt
-import pandas as pd
-from statsforecast import StatsForecast
-from statsforecast.models import MSTL, AutoETS, RandomWalkWithDrift, SeasonalNaive
-from statsmodels.tsa.seasonal import MSTL as MSTLDecomposition
-
-# Importiert die Lab-Helfer für Laden, Backtest-Schritt und Score.
-import common
-from common.lab1_backtest import add_step, score
-
-# Legt die Standardgröße der Abbildungen fest.
-plt.rcParams["figure.figsize"] = (11, 3.2)
+# Legt eine neue Achse an.
+fig, ax = plt.subplots()
+# Zeichnet beide Saisonkomponenten über zwei Märzwochen.
+res.seasonal["2025-03-03":"2025-03-16"].plot(ax=ax, lw=1)
+# Beschriftet Achsen und Titel.
+ax.set(ylabel="MWh", xlabel="", title="Saisonkomponenten, zwei Wochen im März 2025")
+# Zeigt die Abbildung.
+plt.show()
