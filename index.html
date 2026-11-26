@@ -2232,34 +2232,6 @@ html,body{margin:0;height:100%;background:#1b1b1b;overflow:hidden}
 </ul>
 
 </section>
-<section id="f108">
-<p class="eyebrow">Teil VII · Klassifikation auf Zeitreihen</p>
-<h2>Kostenmatrix</h2>
-<table>
-<tr>
-<th></th>
-<th>Ereignis tritt ein</th>
-<th>kein Ereignis</th>
-</tr>
-<tr>
-<td><b>Alarm</b></td>
-<td>TP: Maßnahme greift</td>
-<td>FP: Fehlalarm, Kosten c_FP</td>
-</tr>
-<tr>
-<td><b>kein Alarm</b></td>
-<td>FN: verpasstes Ereignis, Kosten c_FN</td>
-<td>TN: nichts zu tun</td>
-</tr>
-</table>
-<ul>
-<li class="fragment" data-fragment-index="1">c_FP: Aufmerksamkeit im Betrieb, vorsorgliche Maßnahme ohne Anlass, Vertrauensverlust bei vielen Fehlalarmen </li>
-<li class="fragment" data-fragment-index="2">c_FN: Abweichung trifft den Betrieb unvorbereitet, Folgekosten, Meldepflichten </li>
-<li class="fragment" data-fragment-index="3">Gebraucht wird nur das Verhältnis c_FN zu c_FP, nicht der Betrag in Euro </li>
-<li class="fragment" data-fragment-index="4">Das Verhältnis kommt aus dem Betrieb, nicht aus den Daten </li>
-</ul>
-
-</section>
 <section id="f111" class="dense">
 <p class="eyebrow">Teil VII · Klassifikation auf Zeitreihen</p>
 <h2>Zeitliche Validierung</h2>
@@ -2383,9 +2355,12 @@ html,body{margin:0;height:100%;background:#1b1b1b;overflow:hidden}
 <li class="fragment" data-fragment-index="3">Für Zeitreihen: Eingabe sind die Lags wie bei LightGBM, etwa die Last der letzten 168 Stunden; Ausgabe sind die nächsten 24 Stunden </li>
 <li class="fragment" data-fragment-index="4">Das MLP sieht die Lags als ungeordnete Merkmale, die Reihenfolge kennt es nicht </li>
 </ul>
+<div class="fragment" data-fragment-index="5">
+<img alt="relu" class="fig" src="figs/relu.png" style="width:500px;height:240px;object-fit:contain"/>
+</div>
 </div>
 <div class="column" style="width:53%">
-<div class="fragment" data-fragment-index="5" style="max-height: 440px">
+<div class="fragment" data-fragment-index="6" style="max-height: 440px">
 <img alt="mlp lags" class="fig" src="figs/mlp_lags.png" style="width:749px;height:524px;object-fit:contain"/>
 </div>
 </div>
@@ -3091,7 +3066,7 @@ html,body{margin:0;height:100%;background:#1b1b1b;overflow:hidden}
 <h2>Schwellenpflege für Alarme</h2>
 <ul>
 <li class="fragment" data-fragment-index="1"><b>Alarmbudget überwachen:</b> Alarme je Woche am vereinbarten Budget messen; eine Abweichung ist das erste Drift-Signal des Detektors </li>
-<li class="fragment" data-fragment-index="2"><b>Kalibrierung nachziehen,</b> wenn sich die Ereignisrate ändert: dieselbe Kostenmatrix, Schwelle auf aktuellen Daten prüfen </li>
+<li class="fragment" data-fragment-index="2"><b>Kalibrierung nachziehen,</b> wenn sich die Ereignisrate ändert: dasselbe Kostenverhältnis, Schwelle auf aktuellen Daten prüfen </li>
 <li class="fragment" data-fragment-index="3"><b>Kontext statt fester Grenze:</b> Schwelle je Tageszeit oder Regime, Residuum eines Prognosemodells als Score </li>
 <li class="fragment" data-fragment-index="4"><b>Neues Gebiet, neue Schwelle:</b> aus der Verteilung des Gebiets bestimmen, nicht übernehmen (Kontinentaleuropa 100 mHz, Nordic 150 mHz) </li>
 <li class="fragment" data-fragment-index="5"><b>Rückmeldung der Systemführung als Label:</b> bestätigt, Fehlalarm, verpasst </li>
