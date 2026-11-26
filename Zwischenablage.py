@@ -10,3 +10,19 @@ X = pd.concat([lags, rolling, calendar, fourier_features(y.index)], axis=1)
 pd.testing.assert_frame_equal(X, make_features(y))  # dieselbe Tabelle wie in der Übung
 # Gibt Größe und erste Spalten der Merkmalstabelle aus.
 print("Merkmalstabelle:", X.shape, "| Spalten:", ", ".join(X.columns[:10]), "...")
+
+
+
+def make_lgbm():
+    # Gibt ein neues Modell mit festem Seed zurück.
+    return lgb.LGBMRegressor(random_state=SEED, verbose=-1)
+
+
+# Führt den Rolling-Origin-Backtest mit LightGBM aus.
+res = backtest(make_lgbm, X, y).rename(columns={"pred": "lightgbm"})
+# Ergänzt Seasonal Naive (Lag 168) als Vergleich.
+res["seasonal_naive"] = y.shift(168).reindex(res.index)
+# Gibt Testzeitraum und Zahl der Teststunden aus.
+print("Testzeitraum:", res.index.min(), "bis", res.index.max(), "|", len(res), "Stunden")
+# Vergleicht beide Prognosen in einer Tabelle.
+compare(res, y, ["seasonal_naive", "lightgbm"])
