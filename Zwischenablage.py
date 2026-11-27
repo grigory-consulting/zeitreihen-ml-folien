@@ -1,18 +1,44 @@
-# Holt die Trainingsmaske des letzten Folds.
-train, _ = list(day_ahead_folds(X.index, 6, 56))[-1]
-# Trainiert das Modell auf diesem Fold.
-model = make_lgbm().fit(X[train], y[train])
-# Liest den Gain je Merkmal aus dem Booster.
-gain = pd.Series(model.booster_.feature_importance("gain"), index=X.columns)
-# Wandelt den Gain in Prozentanteile um und sortiert sie.
-share = (100 * gain / gain.sum()).sort_values()
-# Zeichnet die zwölf größten Anteile als Balken.
-ax = share.tail(12).plot.barh(figsize=(7, 3.8))
-# Beschriftet Achse und Titel.
-ax.set(xlabel="Anteil am Gain in %", title="Merkmalswichtigkeit, letzter Fold")
-# Passt die Ränder der Grafik an.
-plt.tight_layout()
-# Zeigt die Grafik.
-plt.show()
-# Gibt die fünf größten Anteile aus.
-print(share.sort_values(ascending=False).head(5).round(1).to_string())
+# Wählt das Netzgebiet für das Lab.
+AREA = "ce"
+
+# Importiert os für den Wechsel des Arbeitsverzeichnisses.
+import os
+# Importiert sys für den Suchpfad der Module.
+import sys
+# Importiert warnings zum Ausblenden von Hinweisen.
+import warnings
+# Importiert Path für Dateipfade.
+from pathlib import Path
+
+# Sucht den Lab-Ordner mit dem Paket common.
+LABS = next(p for p in (Path.cwd(), Path.cwd() / "labs", Path.cwd().parent) if (p / "common").is_dir())
+# Wechselt in den Lab-Ordner.
+os.chdir(LABS)
+# Macht das Paket common importierbar.
+sys.path.insert(0, str(LABS))
+
+# Importiert matplotlib für die Grafiken.
+import matplotlib.pyplot as plt
+# Importiert numpy für Berechnungen auf Arrays.
+import numpy as np
+# Importiert pandas für Zeitreihen und Tabellen.
+import pandas as pd
+# Importiert den Isolation Forest aus scikit-learn.
+from sklearn.ensemble import IsolationForest
+
+# Blendet DeprecationWarnings aus.
+warnings.filterwarnings("ignore", category=DeprecationWarning)   # Hinweise aus numpy/pandas, ohne Folgen hier
+
+# Importiert die gemeinsamen Hilfsfunktionen der Labs.
+import common
+# Importiert Ereignisbildung, Ereignisbewertung und Regler.
+from common import build_events, event_scores, explore
+# Importiert CUSUM, Zeiträume und Schwellensuche für Lab 3.
+from common.lab3_detectors import cusum, periods, threshold_for_budget
+
+# Liest die Einstellungen des Gebiets.
+cfg = common.area_config(AREA)
+# Gibt Gebiet, Schwelle und Seed aus.
+print(f"Gebiet: {cfg['name']}, Schwelle {common.default_threshold(AREA) * 1000:.0f} mHz, Seed {common.SEED}")
+# Gibt den Zeitpunkt des bekannten Ereignisses aus.
+print(f"Bekanntes Ereignis: {cfg['known_event']:%d.%m.%Y %H:%M:%S} UTC")
